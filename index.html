@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="San Francisco 911 Call Data Analysis">
+  <title>San Francisco 911 Call Data</title>
+  <!-- Bootstrap core CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Plugin CSS -->
+  <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="css/freelancer.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+</head>
+
+<body id="page-top">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">San Francisco 911 Call Data</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#graphs">Charts</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#map">Map</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#estimate">Estimate</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead bg-primary text-white text-center">
+    <div class="container">
+      <h2 class="mb-0">Ever wondered about emergency call dispatches?</h2>
+      <br/>
+      <h3 class="font-weight-light mb-0">See below to learn more about emergency calls made in San Francisco!</h3>
+    </div>
+  </header>
+
+  <!-- Graphs Section -->
+  <section id="charts">
+    <div class="container">
+      <h2 class="text-center text-uppercase text-secondary">Graphs</h2>
+      <hr class="star-dark mb-5">
+      <h3 class="text-center text-uppercase text-secondary">Types of Calls</h3>
+      <div class="row">
+        <div class="col-8">
+        <canvas id="call_type_count_chart" width="100%" height="60%"/>
+      </div>
+      <div class="col-4">
+        Let's take a look at the different types of emergency calls made in San Francisco.
+        It's very clear that Medical Incidents are the most common, which isn't really a surprise.
+        Since the number of medical incidents account for more than the other types combined, click
+        <font id ="no_med" color="red">here</font> to
+        view the graph without medical incidents.
+      </div>
+      </div>
+      <br/><br/>
+      <h3 class="text-center text-uppercase text-secondary">Dispatch Time per Call Type</h3>
+      <div class="row">
+        <div class="col-8">
+        <canvas id="call_type_time_chart" width="100%" height="60%"/>
+      </div>
+      <div class="col-4">
+        This chart shows the average time taken between when the emergency call was received to when
+        a dispatch was made for each call type. We can see that train/rail incidents take the longest time
+        to dispatch, with an average of 138.3 minutes or roughly 2 hours and 18 minutes.
+        Since train/rail incidents take longer than the other types combined, click
+        <font id ="no_rails" color="red">here</font> to
+        view the graph without train/rail incidents.
+      </div>
+      </div>
+      <br/><br/>
+      <h3 class="text-center text-uppercase text-secondary">Dispatch Time per Neighborhood</h3>
+      <div class="row">
+        <div class="col-8">
+        <canvas id="neighborhood_time_chart" width="100%" height="60%"/>
+      </div>
+      <div class="col-4">
+        Now let's look at how long it takes for a dispatch to be made for every neighborhood.
+        We can see that the Financial District has the longest average dispatch time of 15.74 minutes
+        while the Sunset has the shortest of 2.36 minutes. So how can we fix this?
+      </div>
+      </div>
+      <br/>
+
+    </div>
+  </section>
+
+  <!-- Heat Map Section -->
+  <section id="map" class="bg-primary text-white mb-0">
+    <div class="container-fluid text-center">
+      <h2 class="text-center text-uppercase text-white mb-0">Heat Map</h2>
+      <hr class="star-light mb-5">
+      <h3 class="font-weight-light mb-0">Heatmap of dispatch frequency</h3>
+      <br/>
+      <div id="heatmap" class="map center"></div>
+    </div>
+  </section>
+
+  <!-- Estimate Section -->
+  <section id="estimate">
+    <div class="container">
+      <h2 class="text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+      <hr class="star-dark mb-5">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Location</h4>
+          <p class="lead mb-0">2215 John Daniel Drive
+            <br>Clark, MO 65243</p>
+        </div>
+        <div class="col-md-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Around the Web</h4>
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item">
+              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                <i class="fa fa-fw fa-facebook"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                <i class="fa fa-fw fa-google-plus"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                <i class="fa fa-fw fa-twitter"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                <i class="fa fa-fw fa-linkedin"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                <i class="fa fa-fw fa-dribbble"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h4 class="text-uppercase mb-4">About Freelancer</h4>
+          <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; Angel Fan 2018</small>
+    </div>
+  </div>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="/js/jqBootstrapValidation.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="/js/freelancer.min.js"></script>
+    <script src="/js/script.js"></script>
+
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEJEVBHgTV-kwYQvUJrRH9ZTe0wsTHbhQ&libraries=visualization&callback=initMap">
+    </script>
+  </body>
+  </html>
