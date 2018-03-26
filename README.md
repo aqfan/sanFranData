@@ -13,7 +13,7 @@ Challenge:  https://www.mindsumo.com/contests/sfpd-dispatch
 4. [Libraries Used](#resources)
 
 
-## How to Run <a name="run"></a>
+## Info <a name="run"></a>
 
 You can view my project at: https://san-francisco-call-data.herokuapp.com/
 
