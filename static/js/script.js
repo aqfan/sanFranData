@@ -234,8 +234,10 @@ $(document).ready(() => {
     //calculates count of each call_type and total time taken for each call type
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
-      calltype_time_sum[temp.call_type] = (calltype_time_sum[temp.call_type] || 0) + temp.difference;
-      calltype_time_count[temp.call_type] = (calltype_time_count[temp.call_type] || 0) + 1;
+      if (temp.difference >= 0) {
+        calltype_time_sum[temp.call_type] = (calltype_time_sum[temp.call_type] || 0) + temp.difference;
+        calltype_time_count[temp.call_type] = (calltype_time_count[temp.call_type] || 0) + 1;
+      }
     }
 
     //calulates average
@@ -278,7 +280,7 @@ $(document).ready(() => {
             },
             scaleLabel: {
               display: true,
-              labelString: 'Average time between call received and unit dispatched (min)'
+              labelString: 'Average time between call received and unit arrival (min)'
             }
           }],
           yAxes: [{
@@ -333,8 +335,10 @@ $(document).ready(() => {
     //gets count of each neighborhood and total time for each neighborhood
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
-      neighborhood_time_sum[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] || 0) + temp.difference;
-      neighborhood_count[temp.neighborhood_district] = (neighborhood_count[temp.neighborhood_district] || 0) + 1;
+      if (temp.difference >= 0) {
+        neighborhood_time_sum[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] || 0) + temp.difference;
+        neighborhood_count[temp.neighborhood_district] = (neighborhood_count[temp.neighborhood_district] || 0) + 1;
+      }
     }
 
     //calculates average time taken
@@ -378,7 +382,7 @@ $(document).ready(() => {
             },
             scaleLabel: {
               display: true,
-              labelString: 'Average time between call received and unit dispatched (min)'
+              labelString: 'Average time between call received and unit arrival (min)'
             }
           }],
           yAxes: [{

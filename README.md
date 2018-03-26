@@ -37,7 +37,7 @@ Data Visuals: Display or graph 3 metrics or trends from the data set that are in
     * Shows that Financial District South has the most amount of calls and Sunset has smallest number of calls
 
 Which areas take the longest time to dispatch to on average? How can this be reduced?
-* Dispatch time per neighborhood graph shows that the Financial District South has the longest average dispatch time of 26.44 minutes while all of the other neighborhoods have an average time of less than 10 minutes. So how can we fix this?
+* Dispatch time per neighborhood graph shows that the Financial District South has the longest average dispatch time of 19.05 minutes, with Bayview and Presidio with second and third longest dispatch time, respectively. So how can we fix this?
 * The Financial District South is located in a crowded area with lots of traffic and it has the highest number of emergency calls,
 which seems to show that there are not enough units
 to cover all of the calls. So, if we increase the number of units, then more units will be free so a dispatcher can quickly connect to and dispatch a unit.
