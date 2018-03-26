@@ -412,12 +412,6 @@ $(document).ready(() => {
       neighborhood_sum_data.push(neighborhood_count[sorted_neighborhood_sum[i]]);
     }
 
-    var sorted_call_types = Object.keys(num_call_types).sort(function(a,b){return num_call_types[b]-num_call_types[a]})
-    for(var i in sorted_call_types) {
-      call_types_label.push(sorted_call_types[i]);
-      call_types_data.push(num_call_types[sorted_call_types[i]]);
-    }
-
     var neighborhood_average_time = new Chart("neighborhood_num_chart", {
       type: 'horizontalBar',
       data: {
