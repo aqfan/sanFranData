@@ -72,7 +72,7 @@
           It's very clear that Medical Incidents are the most common, which isn't really a surprise.
           Since the number of medical incidents account for more than the other types combined, click
           <font id ="no_med" color="red">here</font> to
-          view the graph without medical incidents.
+          view the graph without medical incidents or to switch back.
         </div>
       </div>
       <br/><br/>
@@ -87,7 +87,19 @@
           to dispatch, with an average of 138.3 minutes or roughly 2 hours and 18 minutes.
           Since train/rail incidents take longer than the other types combined, click
           <font id ="no_rails" color="red">here</font> to
-          view the graph without train/rail incidents.
+          view the graph without train/rail incidents or to switch back.
+        </div>
+      </div>
+      <br/><br/>
+      <h3 class="text-center text-uppercase text-secondary">Number of Calls per Neighborhood</h3>
+      <div class="row">
+        <div class="col-12 col-xl-8">
+          <canvas id="neighborhood_num_chart" width="100%" height="60%"/>
+        </div>
+        <div class="col-12 col-xl-4">
+          This is a graph of the number of calls of each neighborhood. We can see that the Financial District South
+          has the most amount of calls with 1347 calls. The sunset neghborhood has the lowest amount of calls, with
+          44 calls.
         </div>
       </div>
       <br/><br/>
@@ -98,11 +110,34 @@
         </div>
         <div class="col-12 col-xl-4">
           Now let's look at how long it takes for a dispatch to be made for every neighborhood.
-          We can see that the Financial District has the longest average dispatch time of 15.74 minutes
-          while the Sunset has the shortest of 2.36 minutes. So how can we fix this?
+          We can see that the Financial District South neighborhood has the longest average dispatch time of 26.44 minutes
+          while all of the other neighborhoods have an average time of less than 10 minutes. So how can we fix this?
+          <br/><br/>
+          One way to decrease dispatch time is by having more emergency units avaliable. Notice that Financial
+          District South also has the highest amount of emergency calls, which seems to show that there are not enough units
+          to cover all of the calls. So, if we increase the number of units, then more units will be free so
+          a dispatcher can quicly connect to and dispatch a unit.
+          Another solution would be to increase efficency of units. This may include figuring out exactly
+          what the problem is in order to dispatch the proper unit.
         </div>
       </div>
-      <br/>
+      <br/><br/>
+      <h3 class="text-center text-uppercase text-secondary">Safest Neighborhood District</h3>
+      <div class="row">
+        <div class="col-12 col-xl-8">
+          <canvas id="safest_chart" width="100%" height="60%"/>
+        </div>
+        <div class="col-12 col-xl-4">
+          Which neighborhood is the safest? Let's look at the percent of non life-threatening calls in each neighborhood.
+          The Finacial District South has the highest percentage of non life-threatening calls, meaning it is the safest
+          neighborhood district.
+          <br/><br/>
+          Combining this graph with the Dispatch Time per Neighborhood graph above, we can see that although the Financial
+          South District has the longest dispatch time, it also has the most amount of non life-threatening calls meaning
+          that the long dispatch time might not be as big of a problem because non life-threatening calls don't require
+          immediate attendance.
+        </div>
+      </div>
 
     </div>
   </section>
@@ -112,9 +147,26 @@
     <div class="container-fluid text-center">
       <h2 class="text-center text-uppercase text-white mb-0">Heat Map</h2>
       <hr class="star-light mb-5">
-      <h3 class="font-weight-light mb-0">Heatmap of dispatch frequency</h3>
+      <h3 class="font-weight-light mb-0">Currently showing: Heatmap of dispatch <text id="map_type">frequency</text></h3>
       <br/>
-      <div id="heatmap" class="map center"></div>
+      <div class="row">
+        <div class="btn-group center" data-toggle="buttons">
+          <label class="btn btn-secondary" id="frequencyMap">
+            View Frequency Map
+          </label>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <label class="btn btn-secondary" id="urgencyMap">
+            View Urgency Map
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div id="heatmap" class="map center"></div>
+      </div>
+      <br/>
+      <div class="row">
+        <h5 class="not-bold center">Notice that the two maps are very similar!</h5>
+      </div>
     </div>
   </section>
 
@@ -141,94 +193,46 @@
         </div>
         <div class="col-12 col-xl-6 text-center">
           <h3 id="estimation">Please enter address and time!</h2><br/>
-          <h5 class="not-bold">Call Type: <text id="call_type"></text></h5><br/>
-          <h5 class="not-bold">Unit Dispatched: <text id="unit_type"></text></h5><br/>
-          <h5 class="not-bold">Time Taken for Dispatch: <text id="time_taken"></text> min</h5><br/>
+            <h5 class="not-bold">Call Type: <text id="call_type"></text></h5><br/>
+            <h5 class="not-bold">Unit Dispatched: <text id="unit_type"></text></h5><br/>
+            <h5 class="not-bold">Time Taken for Dispatch: <text id="time_taken"></text> min</h5><br/>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <div class="copyright py-4 text-center text-white">
+      <div class="container">
+        <small>Copyright &copy; Angel Fan 2018</small>
       </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-5 mb-lg-0">
-          <h4 class="text-uppercase mb-4">Location</h4>
-          <p class="lead mb-0">2215 John Daniel Drive
-            <br>Clark, MO 65243</p>
-          </div>
-          <div class="col-md-4 mb-5 mb-lg-0">
-            <h4 class="text-uppercase mb-4">Around the Web</h4>
-            <ul class="list-inline mb-0">
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-facebook"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-google-plus"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-twitter"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-linkedin"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-dribbble"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <h4 class="text-uppercase mb-4">About Freelancer</h4>
-            <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-              <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-to-top d-lg-none position-fixed ">
+      <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+      </a>
+    </div>
 
-      <div class="copyright py-4 text-center text-white">
-        <div class="container">
-          <small>Copyright &copy; Angel Fan 2018</small>
-        </div>
-      </div>
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-      <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-      <div class="scroll-to-top d-lg-none position-fixed ">
-        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
-          <i class="fa fa-chevron-up"></i>
-        </a>
-      </div>
+    <!-- Plugin JavaScript -->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
-      <!-- Bootstrap core JavaScript -->
-      <script src="/vendor/jquery/jquery.min.js"></script>
-      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Contact Form JavaScript -->
+    <script src="/js/jqBootstrapValidation.js"></script>
 
-      <!-- Plugin JavaScript -->
-      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-      <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
-      <!-- Contact Form JavaScript -->
-      <script src="/js/jqBootstrapValidation.js"></script>
-
-      <!-- Custom scripts for this template -->
-      <script src="/js/freelancer.min.js"></script>
-      <script src="/js/script.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="/js/freelancer.min.js"></script>
+    <script src="/js/script.js"></script>
 
 
-      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-      <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEJEVBHgTV-kwYQvUJrRH9ZTe0wsTHbhQ&libraries=visualization&callback=initMap">
-      </script>
-    </body>
-    </html>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEJEVBHgTV-kwYQvUJrRH9ZTe0wsTHbhQ&libraries=visualization&callback=initMap">
+    </script>
+  </body>
+  </html>

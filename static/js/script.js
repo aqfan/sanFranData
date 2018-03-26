@@ -1,6 +1,6 @@
 "use strict";
 
-var map, heatmap, marker, geocoder;
+var map, heatmap_freq, heatmap_urgency, geocoder;
 
 var medChart = true, railChart = true;
 
@@ -12,23 +12,35 @@ function initMap() {
     gestureHandling: 'cooperative'
   });
 
-  var marker = new google.maps.Marker({
-    position: {lat: 37.7749, lng: -122.4194},
-    map: map,
-    draggable: true
-  });
-
   geocoder = new google.maps.Geocoder();
 }
 
-// Gets heatmap data from csv
-function getPoints(data) {
+// Gets heatmap frequency data from csv
+function getFreqPoints(data) {
   var arr = new google.maps.MVCArray();
   for (var i = 0; i < 10000; i++) {
     var coordinate = data[i];
     var lat = parseFloat(coordinate.latitude);
     var lgn = parseFloat(coordinate.longitude);
     arr.push(new google.maps.LatLng(lat, lgn));
+  }
+  return arr;
+}
+
+// Gets heatmap urgency data from csv
+function getUrgencyPoints(data) {
+  var arr = new google.maps.MVCArray();
+  for (var i = 0; i < 10000; i++) {
+    var coordinate = data[i];
+    var lat = parseFloat(coordinate.latitude);
+    var lgn = parseFloat(coordinate.longitude);
+    var weight = 1;
+    if(parseInt(coordinate.final_priority) == 2) {
+      weight = 1;
+    } else {
+      weight = 30;
+    }
+    arr.push({"location": new google.maps.LatLng(lat, lgn), "weight": weight});
   }
   return arr;
 }
@@ -48,7 +60,7 @@ function geocodeAddress(geocoder, data) {
 
         for (var i = 0; i < data.length; i++) {
           var temp = data[i];
-          var data_time = temp.received_timestamp.substring(11);
+          var data_time = temp.received_timestamp.substring(10);
           var parts_data = data_time.toString().split(':');
           var parts = time.split(':');
           var time_difference = Math.abs(parseInt(parts[0]) - parseInt(parts_data[0]))*60 + Math.abs(parseInt(parts[1]) - parseInt(parts_data[1]));
@@ -78,7 +90,7 @@ function geocodeAddress(geocoder, data) {
         call_type = Object.keys(call_type).sort(function(a,b){return call_type[b]-call_type[a]})
         unit_type = Object.keys(unit_type).sort(function(a,b){return unit_type[b]-unit_type[a]})
 
-        $('#estimation').text("These are the predicted dispatches:");
+        $('#estimation').text("Predicted dispatch based on " + closest.length +" calls:");
         $('#call_type').text(call_type[0]);
         $('#time_taken').text((time_taken_sum[call_type[0]] / time_taken_count[call_type[0]]).toFixed(2));
         $('#unit_type').text(unit_type[0]);
@@ -94,11 +106,27 @@ function geocodeAddress(geocoder, data) {
 }
 
 $(document).ready(() => {
-  //Creates HeatMap
   $.getJSON('/data').done(function(data) {
-    heatmap = new google.maps.visualization.HeatmapLayer({
-      data: getPoints(data),
-      map: map
+    //Creates HeatMaps
+    heatmap_freq = new google.maps.visualization.HeatmapLayer({
+      data: getFreqPoints(data),
+    });
+
+    heatmap_urgency = new google.maps.visualization.HeatmapLayer({
+      data: getUrgencyPoints(data),
+    });
+    heatmap_freq.setMap(map);
+
+    $('#frequencyMap').on('click', function() {
+      $('#map_type').text("frequency");
+      heatmap_freq.setMap(map);
+      heatmap_urgency.setMap(null);
+    });
+
+    $('#urgencyMap').on('click', function() {
+      $('#map_type').text("urgency");
+      heatmap_freq.setMap(null);
+      heatmap_urgency.setMap(map);
     });
 
     //Estimate dispatch with address and time
@@ -124,7 +152,7 @@ $(document).ready(() => {
       data: {
         datasets: [{
           data: call_types_data,
-          backgroundColor:'rgba(190,69,25,0.7)'
+          backgroundColor:'rgba(61,230,196,0.7)'
         }],
         labels: call_types_label
       },
@@ -220,7 +248,7 @@ $(document).ready(() => {
       data: {
         datasets: [{
           data: calltype_time_data,
-          backgroundColor:'rgba(95,89,12,0.7)'
+          backgroundColor:'rgba(128,230,61,0.7)'
         }],
         labels: calltype_label
       },
@@ -291,18 +319,18 @@ $(document).ready(() => {
     var neighborhood_label = [];
     var neighborhood_time_data = [];
     var neighborhood_time_sum = {};
-    var neighborhood_time_count = {};
+    var neighborhood_count = {};
     var neighborhood_time_avg = {};
 
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
       neighborhood_time_sum[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] || 0) + temp.difference;
-      neighborhood_time_count[temp.neighborhood_district] = (neighborhood_time_count[temp.neighborhood_district] || 0) + 1;
+      neighborhood_count[temp.neighborhood_district] = (neighborhood_count[temp.neighborhood_district] || 0) + 1;
     }
 
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
-      neighborhood_time_avg[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] / neighborhood_time_count[temp.neighborhood_district]).toFixed(2);
+      neighborhood_time_avg[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] / neighborhood_count[temp.neighborhood_district]).toFixed(2);
     }
 
     var neighborhood_sorted = Object.keys(neighborhood_time_avg).sort(function(a,b){return neighborhood_time_avg[b]-neighborhood_time_avg[a]})
@@ -317,7 +345,7 @@ $(document).ready(() => {
       data: {
         datasets: [{
           data: neighborhood_time_data,
-          backgroundColor:'rgba(230,61,162,0.7)'
+          backgroundColor:'rgba(230,106,61,0.7)'
         }],
         labels: neighborhood_label
       },
@@ -354,6 +382,122 @@ $(document).ready(() => {
         }
       }
     })//close neighborhood vs time taken
+
+    //Create num calls vs neighborhood chart
+    var neighborhood_sum_data= [];
+    var neighborhood_sum = Object.keys(neighborhood_count).sort(function(a,b){return neighborhood_count[b]-neighborhood_count[a]})
+
+    for(var i in neighborhood_sum) {
+      neighborhood_sum_data.push(neighborhood_count[neighborhood_sum[i]]);
+    }
+
+    var neighborhood_average_time = new Chart("neighborhood_num_chart", {
+      type: 'horizontalBar',
+      data: {
+        datasets: [{
+          data: neighborhood_sum_data,
+          backgroundColor:'rgba(230,61,162,0.7)'
+        }],
+        labels: neighborhood_label
+      },
+      options: {
+        responsive: true,
+        defaultFontSize: 18,
+        title: {
+          display: true,
+          fontSize: 20,
+          text: 'Number of Calls per Neighborhood'
+        },
+        legend:{
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            gridLines:{
+              display: false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Number of Calls'
+            }
+          }],
+          yAxes: [{
+            gridLines:{
+              display: false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Neighborhood'
+            }
+          }]
+        }
+      }
+    })//close neighborhood vs num calls
+
+    //Create safest neighborhood chart
+    var safe_count = {};
+
+    for(var i = 0; i < data.length; i++) {
+      var temp = data[i];
+      if(temp.call_type_group == "Non Life-threatening") {
+        safe_count[temp.neighborhood_district] = (safe_count[temp.neighborhood_district] || 0) + 1;
+      }
+    }
+    var safe_count_avg= [];
+    for(var i in safe_count) {
+      safe_count_avg.push((safe_count[i] / neighborhood_count[i]).toFixed(2) * 100);
+    }
+
+    var safe_sorted = Object.keys(safe_count_avg).sort(function(a,b){return safe_count_avg[b]-safe_count_avg[a]})
+
+    var safe_count_data= [];
+    for(var i in safe_sorted) {
+      safe_count_data.push(safe_count_avg[safe_sorted[i]]);
+    }
+
+    var safest_neighorhood_chart = new Chart("safest_chart", {
+      type: 'horizontalBar',
+      data: {
+        datasets: [{
+          data: safe_count_data,
+          backgroundColor:'rgba(230,219,61,0.7)'
+        }],
+        labels: neighborhood_label
+      },
+      options: {
+        responsive: true,
+        defaultFontSize: 18,
+        title: {
+          display: true,
+          fontSize: 20,
+          text: 'Percent of Non Life-Threatening Calls per Neighborhood'
+        },
+        legend:{
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            gridLines:{
+              display: false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Percent of Calls (%)'
+            }
+          }],
+          yAxes: [{
+            gridLines:{
+              display: false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Neighborhood'
+            }
+          }]
+        }
+      }
+    })//close neighborhood vs num calls
+
   })// close getJSON
 
 });
