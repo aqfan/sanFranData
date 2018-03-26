@@ -37,11 +37,11 @@ Data Visuals: Display or graph 3 metrics or trends from the data set that are in
     * Shows that Financial District South has the most amount of calls and Sunset has smallest number of calls
 
 Which areas take the longest time to dispatch to on average? How can this be reduced?
-* Dispatch time per neighborhood graph shows that the Financial District South has the longest average dispatch time of 26.44 minutes while all of the other neighborhoods have an average time of less than 10 minutes. So how can we fix this? One way to decrease dispatch time is by having more emergency units avaliable. Notice that Financial District South also has the highest amount of emergency calls, which seems to show that there are not enough units to cover all of the calls. So, if we increase the number of units, then more units will be free so a dispatcher can quicly connect to and dispatch a unit.
+* Dispatch time per neighborhood graph shows that the Financial District South has the longest average dispatch time of 26.44 minutes while all of the other neighborhoods have an average time of less than 10 minutes. So how can we fix this? One way to decrease dispatch time is by having more emergency units available. Notice that Financial District South also has the highest amount of emergency calls, which seems to show that there are not enough units to cover all of the calls. So, if we increase the number of units, then more units will be free so a dispatcher can quickly connect to and dispatch a unit. Another solution would be to increase efficiency of units. This may include figuring out exactly what the problem is in order to dispatch the proper unit or to create a better system for units to solve problems faster.​
 
 Given an address and time, what is the most likely dispatch to be required?
 * Estimates type of call made, type of unit dispatched, and time taken for dispatch based on inputted address and time.
-* Estimates are made by looking for datasets withing 0.01 degrees of the given address and withing 30 minutes of the given time
+* Estimates are made by looking for datasets within 0.01 degrees of the given address and withing 30 minutes of the given time
 
 ## Bonus Features <a name="bonus"></a>
 

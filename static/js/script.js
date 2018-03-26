@@ -4,6 +4,7 @@ var map, heatmap_freq, heatmap_urgency, geocoder;
 
 var medChart = true, railChart = true;
 
+// Initiales the map
 function initMap() {
   map = new google.maps.Map(document.getElementById('heatmap'), {
     zoom: 13,
@@ -54,6 +55,7 @@ function geocodeAddress(geocoder, data) {
       if (status === 'OK') {
         var lat = results[0].geometry.location.lat();
         var lng = results[0].geometry.location.lng();
+
         //finds datasets within 0.05 degrees of longitude and lattitude and 30 min
         //roughly 3.5 mile radius
         var closest = [];
@@ -74,6 +76,7 @@ function geocodeAddress(geocoder, data) {
           return;
         }
 
+        //finds the values to predict
         var call_type = {};
         var unit_type = {};
         var time_taken_sum = {};
@@ -90,6 +93,7 @@ function geocodeAddress(geocoder, data) {
         call_type = Object.keys(call_type).sort(function(a,b){return call_type[b]-call_type[a]})
         unit_type = Object.keys(unit_type).sort(function(a,b){return unit_type[b]-unit_type[a]})
 
+        //shows predictions
         $('#estimation').text("Predicted dispatch based on " + closest.length +" calls:");
         $('#call_type').text(call_type[0]);
         $('#time_taken').text((time_taken_sum[call_type[0]] / time_taken_count[call_type[0]]).toFixed(2));
@@ -107,6 +111,7 @@ function geocodeAddress(geocoder, data) {
 
 $(document).ready(() => {
   $.getJSON('/data').done(function(data) {
+
     //Creates HeatMaps
     heatmap_freq = new google.maps.visualization.HeatmapLayer({
       data: getFreqPoints(data),
@@ -226,12 +231,14 @@ $(document).ready(() => {
     var calltype_time_count = {};
     var calltype_time_avg = {};
 
+    //calculates count of each call_type and total time taken for each call type
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
       calltype_time_sum[temp.call_type] = (calltype_time_sum[temp.call_type] || 0) + temp.difference;
       calltype_time_count[temp.call_type] = (calltype_time_count[temp.call_type] || 0) + 1;
     }
 
+    //calulates average
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
       calltype_time_avg[temp.call_type] = (calltype_time_sum[temp.call_type] / calltype_time_count[temp.call_type]).toFixed(2);
@@ -243,6 +250,7 @@ $(document).ready(() => {
       calltype_time_data.push(calltype_time_avg[sorted[i]]);
     }
 
+    //creates graph
     var call_type_vs_time = new Chart("call_type_time_chart", {
       type: 'horizontalBar',
       data: {
@@ -284,7 +292,7 @@ $(document).ready(() => {
           }]
         }
       }
-    })//close call type
+    })//close call type avg time chart
 
     var calltype_label_no_train = [];
     var calltype_time_data_no_train = [];
@@ -322,12 +330,14 @@ $(document).ready(() => {
     var neighborhood_count = {};
     var neighborhood_time_avg = {};
 
+    //gets count of each neighborhood and total time for each neighborhood
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
       neighborhood_time_sum[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] || 0) + temp.difference;
       neighborhood_count[temp.neighborhood_district] = (neighborhood_count[temp.neighborhood_district] || 0) + 1;
     }
 
+    //calculates average time taken
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
       neighborhood_time_avg[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] / neighborhood_count[temp.neighborhood_district]).toFixed(2);
@@ -340,6 +350,7 @@ $(document).ready(() => {
       neighborhood_time_data.push(neighborhood_time_avg[neighborhood_sorted[i]]);
     }
 
+    //creates chart
     var neighborhood_average_time = new Chart("neighborhood_time_chart", {
       type: 'horizontalBar',
       data: {
@@ -381,7 +392,7 @@ $(document).ready(() => {
           }]
         }
       }
-    })//close neighborhood vs time taken
+    })//close neighborhood vs time taken chart
 
     //Create num calls vs neighborhood chart
     var neighborhood_sum_data= [];
@@ -432,7 +443,7 @@ $(document).ready(() => {
           }]
         }
       }
-    })//close neighborhood vs num calls
+    })//close neighborhood vs num calls chart
 
     //Create safest neighborhood chart
     var safe_count = {};
