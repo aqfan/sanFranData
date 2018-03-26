@@ -474,7 +474,6 @@ $(document).ready(() => {
     }
 
     var safe_sorted = Object.keys(safe_count_avg).sort(function(a,b){return safe_count_avg[b]-safe_count_avg[a]})
-console.log(safe_count_avg)
     var safe_count_data = [];
     var safe_count_label = [];
     for(var i in safe_sorted) {

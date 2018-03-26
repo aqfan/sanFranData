@@ -7,7 +7,7 @@ Built for the CapitalOne Challenge for Summer Summit 2018.
 Challenge:  https://www.mindsumo.com/contests/sfpd-dispatch
 
 ## Table of Contents
-1. [How to Run](#run)
+1. [Info](#run)
 2. [Challenge Features](#features)
 3. [Bonus Features](#bonus)
 4. [Libraries Used](#resources)
@@ -23,8 +23,10 @@ Or you can clone my project and run
 npm install
 node server.js
 ```
-Most of the logic behind the site is in script.js under the script/js folder.
+Most of the logic behind the site is in script.js under the /script/js folder.
 I based the neighborhood districts off of http://www.healthysf.org/bdi/outcomes/zipmap.htm and https://www.unitedstateszipcodes.org/
+
+See SF_Data.ipynb under the /data folder to learn more about my calculations on Jupyter using python.
 
 ## Challenge Features <a name="features"></a>
 
