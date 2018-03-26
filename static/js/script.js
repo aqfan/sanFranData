@@ -1,8 +1,8 @@
 "use strict";
 
-var map, heatmap, marker;
+var map, heatmap, marker, geocoder;
 
-var medChart, railChart = true;
+var medChart = true, railChart = true;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('heatmap'), {
@@ -18,6 +18,7 @@ function initMap() {
     draggable: true
   });
 
+  geocoder = new google.maps.Geocoder();
 }
 
 // Gets heatmap data from csv
@@ -32,12 +33,77 @@ function getPoints(data) {
   return arr;
 }
 
+// Geocodes address
+function geocodeAddress(geocoder, data) {
+  var address = $('#address').val();
+  var time = $('#time').val();
+  if (address != "" && time != "") {
+    geocoder.geocode({'address': address}, function(results, status) {
+      if (status === 'OK') {
+        var lat = results[0].geometry.location.lat();
+        var lng = results[0].geometry.location.lng();
+        //finds datasets within 0.05 degrees of longitude and lattitude and 30 min
+        //roughly 3.5 mile radius
+        var closest = [];
+
+        for (var i = 0; i < data.length; i++) {
+          var temp = data[i];
+          var data_time = temp.received_timestamp.substring(11);
+          var parts_data = data_time.toString().split(':');
+          var parts = time.split(':');
+          var time_difference = Math.abs(parseInt(parts[0]) - parseInt(parts_data[0]))*60 + Math.abs(parseInt(parts[1]) - parseInt(parts_data[1]));
+          if (Math.abs(temp.latitude - lat) <= 0.05 && Math.abs(temp.longitude - lng) <= 0.01 && time_difference <= 30) {
+            closest.push(temp);
+          }
+        }
+
+        if (closest.length == 0) {
+          $('#estimation').text("Sorry! There isn't enough data to estimate for this address. Please try something else in San Francisco!");
+          return;
+        }
+
+        var call_type = {};
+        var unit_type = {};
+        var time_taken_sum = {};
+        var time_taken_count = {};
+
+        for (var i = 0; i < closest.length; i++) {
+          var temp = closest[i];
+          call_type[temp.call_type] = (call_type[temp.call_type] || 0) + 1;
+          unit_type[temp.unit_type] = (unit_type[temp.unit_type] || 0) + 1;
+          time_taken_sum[temp.call_type] = (time_taken_sum[temp.call_type] || 0) + temp.difference;
+          time_taken_count[temp.call_type] = (time_taken_count[temp.call_type] || 0) + 1;
+        }
+
+        call_type = Object.keys(call_type).sort(function(a,b){return call_type[b]-call_type[a]})
+        unit_type = Object.keys(unit_type).sort(function(a,b){return unit_type[b]-unit_type[a]})
+
+        $('#estimation').text("These are the predicted dispatches:");
+        $('#call_type').text(call_type[0]);
+        $('#time_taken').text((time_taken_sum[call_type[0]] / time_taken_count[call_type[0]]).toFixed(2));
+        $('#unit_type').text(unit_type[0]);
+
+      } else {
+        $('#estimation').text("Please enter valid address!");
+      }
+    });
+  } else {
+    $('#estimation').text("Please don't leave any fields blank!");
+  }
+
+}
+
 $(document).ready(() => {
   //Creates HeatMap
   $.getJSON('/data').done(function(data) {
     heatmap = new google.maps.visualization.HeatmapLayer({
       data: getPoints(data),
       map: map
+    });
+
+    //Estimate dispatch with address and time
+    $('#submit').on('click', function() {
+      geocodeAddress(geocoder, data);
     });
 
     //Create call final disposition chart
@@ -288,9 +354,6 @@ $(document).ready(() => {
         }
       }
     })//close neighborhood vs time taken
-
   })// close getJSON
 
 });
-
-//Creates unit_type vs time taken graph

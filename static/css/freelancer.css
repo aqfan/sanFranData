@@ -99,6 +99,9 @@ section h2 {
   line-height: 3.1rem;
 }
 
+.not-bold {
+  font-weight: normal;
+}
 .map {
   height: 40em;
   width: 75%;

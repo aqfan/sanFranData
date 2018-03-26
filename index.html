@@ -58,49 +58,49 @@
   </header>
 
   <!-- Graphs Section -->
-  <section id="charts">
+  <section id="graphs">
     <div class="container">
       <h2 class="text-center text-uppercase text-secondary">Graphs</h2>
       <hr class="star-dark mb-5">
       <h3 class="text-center text-uppercase text-secondary">Types of Calls</h3>
       <div class="row">
-        <div class="col-8">
-        <canvas id="call_type_count_chart" width="100%" height="60%"/>
-      </div>
-      <div class="col-4">
-        Let's take a look at the different types of emergency calls made in San Francisco.
-        It's very clear that Medical Incidents are the most common, which isn't really a surprise.
-        Since the number of medical incidents account for more than the other types combined, click
-        <font id ="no_med" color="red">here</font> to
-        view the graph without medical incidents.
-      </div>
+        <div class="col-12 col-xl-8">
+          <canvas id="call_type_count_chart" width="100%" height="60%"/>
+        </div>
+        <div class="col-12 col-xl-4">
+          Let's take a look at the different types of emergency calls made in San Francisco.
+          It's very clear that Medical Incidents are the most common, which isn't really a surprise.
+          Since the number of medical incidents account for more than the other types combined, click
+          <font id ="no_med" color="red">here</font> to
+          view the graph without medical incidents.
+        </div>
       </div>
       <br/><br/>
       <h3 class="text-center text-uppercase text-secondary">Dispatch Time per Call Type</h3>
       <div class="row">
-        <div class="col-8">
-        <canvas id="call_type_time_chart" width="100%" height="60%"/>
-      </div>
-      <div class="col-4">
-        This chart shows the average time taken between when the emergency call was received to when
-        a dispatch was made for each call type. We can see that train/rail incidents take the longest time
-        to dispatch, with an average of 138.3 minutes or roughly 2 hours and 18 minutes.
-        Since train/rail incidents take longer than the other types combined, click
-        <font id ="no_rails" color="red">here</font> to
-        view the graph without train/rail incidents.
-      </div>
+        <div class="col-12 col-xl-8">
+          <canvas id="call_type_time_chart" width="100%" height="60%"/>
+        </div>
+        <div class="col-12 col-xl-4">
+          This chart shows the average time taken between when the emergency call was received to when
+          a dispatch was made for each call type. We can see that train/rail incidents take the longest time
+          to dispatch, with an average of 138.3 minutes or roughly 2 hours and 18 minutes.
+          Since train/rail incidents take longer than the other types combined, click
+          <font id ="no_rails" color="red">here</font> to
+          view the graph without train/rail incidents.
+        </div>
       </div>
       <br/><br/>
       <h3 class="text-center text-uppercase text-secondary">Dispatch Time per Neighborhood</h3>
       <div class="row">
-        <div class="col-8">
-        <canvas id="neighborhood_time_chart" width="100%" height="60%"/>
-      </div>
-      <div class="col-4">
-        Now let's look at how long it takes for a dispatch to be made for every neighborhood.
-        We can see that the Financial District has the longest average dispatch time of 15.74 minutes
-        while the Sunset has the shortest of 2.36 minutes. So how can we fix this?
-      </div>
+        <div class="col-12 col-xl-8">
+          <canvas id="neighborhood_time_chart" width="100%" height="60%"/>
+        </div>
+        <div class="col-12 col-xl-4">
+          Now let's look at how long it takes for a dispatch to be made for every neighborhood.
+          We can see that the Financial District has the longest average dispatch time of 15.74 minutes
+          while the Sunset has the shortest of 2.36 minutes. So how can we fix this?
+        </div>
       </div>
       <br/>
 
@@ -121,11 +121,29 @@
   <!-- Estimate Section -->
   <section id="estimate">
     <div class="container">
-      <h2 class="text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+      <h2 class="text-center text-uppercase text-secondary mb-0">Estimate Type of Dispatch</h2>
       <hr class="star-dark mb-5">
+      <h3 class="font-weight-light mb-0">Enter an address and time and to get the most likely dispatch to be required</h3>
+      <br/>
       <div class="row">
-        <div class="col-lg-8 mx-auto">
-
+        <div class="col-12 col-xl-6">
+          <form>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="Enter address" required>
+            </div>
+            <div class="form-group">
+              <label for="time">Time</label>
+              <input type="time" class="form-control" id="time" required>
+            </div>
+            <label type = "submit" class="btn btn-primary" id="submit" formnovalidate>Submit</label>
+          </form>
+        </div>
+        <div class="col-12 col-xl-6 text-center">
+          <h3 id="estimation">Please enter address and time!</h2><br/>
+          <h5 class="not-bold">Call Type: <text id="call_type"></text></h5><br/>
+          <h5 class="not-bold">Unit Dispatched: <text id="unit_type"></text></h5><br/>
+          <h5 class="not-bold">Time Taken for Dispatch: <text id="time_taken"></text> min</h5><br/>
         </div>
       </div>
     </div>
@@ -139,78 +157,78 @@
           <h4 class="text-uppercase mb-4">Location</h4>
           <p class="lead mb-0">2215 John Daniel Drive
             <br>Clark, MO 65243</p>
+          </div>
+          <div class="col-md-4 mb-5 mb-lg-0">
+            <h4 class="text-uppercase mb-4">Around the Web</h4>
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-google-plus"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-linkedin"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-dribbble"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4 class="text-uppercase mb-4">About Freelancer</h4>
+            <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
+              <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            </div>
+          </div>
         </div>
-        <div class="col-md-4 mb-5 mb-lg-0">
-          <h4 class="text-uppercase mb-4">Around the Web</h4>
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fa fa-fw fa-facebook"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fa fa-fw fa-google-plus"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fa fa-fw fa-twitter"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fa fa-fw fa-linkedin"></i>
-              </a>
-            </li>
-            <li class="list-inline-item">
-              <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                <i class="fa fa-fw fa-dribbble"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-md-4">
-          <h4 class="text-uppercase mb-4">About Freelancer</h4>
-          <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+      </footer>
+
+      <div class="copyright py-4 text-center text-white">
+        <div class="container">
+          <small>Copyright &copy; Angel Fan 2018</small>
         </div>
       </div>
-    </div>
-  </footer>
 
-  <div class="copyright py-4 text-center text-white">
-    <div class="container">
-      <small>Copyright &copy; Angel Fan 2018</small>
-    </div>
-  </div>
+      <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+      <div class="scroll-to-top d-lg-none position-fixed ">
+        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+      </div>
 
-  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-  <div class="scroll-to-top d-lg-none position-fixed ">
-    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
-      <i class="fa fa-chevron-up"></i>
-    </a>
-  </div>
+      <!-- Bootstrap core JavaScript -->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Plugin JavaScript -->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+      <!-- Contact Form JavaScript -->
+      <script src="/js/jqBootstrapValidation.js"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="/js/jqBootstrapValidation.js"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="/js/freelancer.min.js"></script>
-    <script src="/js/script.js"></script>
+      <!-- Custom scripts for this template -->
+      <script src="/js/freelancer.min.js"></script>
+      <script src="/js/script.js"></script>
 
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEJEVBHgTV-kwYQvUJrRH9ZTe0wsTHbhQ&libraries=visualization&callback=initMap">
-    </script>
-  </body>
-  </html>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEJEVBHgTV-kwYQvUJrRH9ZTe0wsTHbhQ&libraries=visualization&callback=initMap">
+      </script>
+    </body>
+    </html>
