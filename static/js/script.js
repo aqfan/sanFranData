@@ -86,8 +86,10 @@ function geocodeAddress(geocoder, data) {
           var temp = closest[i];
           call_type[temp.call_type] = (call_type[temp.call_type] || 0) + 1;
           unit_type[temp.unit_type] = (unit_type[temp.unit_type] || 0) + 1;
-          time_taken_sum[temp.call_type] = (time_taken_sum[temp.call_type] || 0) + temp.difference;
-          time_taken_count[temp.call_type] = (time_taken_count[temp.call_type] || 0) + 1;
+          if (temp.difference >= 0) {
+            time_taken_sum[temp.call_type] = (time_taken_sum[temp.call_type] || 0) + temp.difference;
+            time_taken_count[temp.call_type] = (time_taken_count[temp.call_type] || 0) + 1;
+          }
         }
 
         call_type = Object.keys(call_type).sort(function(a,b){return call_type[b]-call_type[a]})
