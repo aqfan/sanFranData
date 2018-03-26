@@ -37,7 +37,13 @@ Data Visuals: Display or graph 3 metrics or trends from the data set that are in
     * Shows that Financial District South has the most amount of calls and Sunset has smallest number of calls
 
 Which areas take the longest time to dispatch to on average? How can this be reduced?
-* Dispatch time per neighborhood graph shows that the Financial District South has the longest average dispatch time of 26.44 minutes while all of the other neighborhoods have an average time of less than 10 minutes. So how can we fix this? One way to decrease dispatch time is by having more emergency units available. Notice that Financial District South also has the highest amount of emergency calls, which seems to show that there are not enough units to cover all of the calls. So, if we increase the number of units, then more units will be free so a dispatcher can quickly connect to and dispatch a unit. Another solution would be to increase efficiency of units. This may include figuring out exactly what the problem is in order to dispatch the proper unit or to create a better system for units to solve problems faster.​
+* Dispatch time per neighborhood graph shows that the Financial District South has the longest average dispatch time of 26.44 minutes while all of the other neighborhoods have an average time of less than 10 minutes. So how can we fix this?
+* The Financial District South is located in a crowded area with lots of traffic and it has the highest number of emergency calls,
+which seems to show that there are not enough units
+to cover all of the calls. So, if we increase the number of units, then more units will be free so a dispatcher can quickly connect to and dispatch a unit.
+* We can decrease dispatch time in Bayview-Hunters Point by possibly having more patrol around since the area is most houses. The dispatch time is still under the average for the United States in general, so there shouldn't be too much to worry about.
+* As for Presidio, there are a few fire stations nearby but most of the land is very open so it may take longer to find a unit to dispatch.
+Thus, having a closer more centralized fire station may decrease dispatch time.
 
 Given an address and time, what is the most likely dispatch to be required?
 * Estimates type of call made, type of unit dispatched, and time taken for dispatch based on inputted address and time.
@@ -52,7 +58,7 @@ Heat maps: Add heat maps that show dispatch frequency, urgency over the city.
 
 Crime correlation: Based on the type of dispatch and the frequency of dispatch, show the most calm and safe neighborhoods in the city
 * The percent of non life-threatening calls per neighborhood graph shows the neighborhoods in order of safest to most dangerous.
-* Financial District South has the highest percentage of non life-threatening calls and is the safest neighborhood
+* Financial District South has the highest percentage of non life-threatening calls and is the safest district in terms of calls dispatched from the fire department
 
 ## Libraries Used <a name="resources"></a>
 
