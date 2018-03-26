@@ -23,6 +23,8 @@ Or you can clone my project and run
 npm install
 node server.js
 ```
+Most of the logic behind the site is in script.js under the script/js folder.
+I based the neighborhood districts off of http://www.healthysf.org/bdi/outcomes/zipmap.htm and https://www.unitedstateszipcodes.org/
 
 ## Challenge Features <a name="features"></a>
 
@@ -34,7 +36,7 @@ Data Visuals: Display or graph 3 metrics or trends from the data set that are in
     * Shows that train/rail incidents take the longest time to dispatch
     * Can switch to a graph that doesn't show train/rail incidents by clicking on the red "here
 * Number of Calls per Neighborhood
-    * Shows that Financial District South has the most amount of calls and Sunset has smallest number of calls
+    * Shows that Hayes Valley has the most amount of calls and Presidio has smallest number of calls which makes sense because Presidio is very spread out while Hayes Valley is much denser.
 
 Which areas take the longest time to dispatch to on average? How can this be reduced?
 * Dispatch time per neighborhood graph shows that the Financial District South has the longest average dispatch time of 19.05 minutes, with Bayview and Presidio with second and third longest dispatch time, respectively. So how can we fix this?
@@ -58,7 +60,7 @@ Heat maps: Add heat maps that show dispatch frequency, urgency over the city.
 
 Crime correlation: Based on the type of dispatch and the frequency of dispatch, show the most calm and safe neighborhoods in the city
 * The percent of non life-threatening calls per neighborhood graph shows the neighborhoods in order of safest to most dangerous.
-* Financial District South has the highest percentage of non life-threatening calls and is the safest district in terms of calls dispatched from the fire department
+* Parkside/Forest Hill has the highest percentage of non life-threatening calls and is the safest district in terms of calls dispatched from the fire department
 
 ## Libraries Used <a name="resources"></a>
 

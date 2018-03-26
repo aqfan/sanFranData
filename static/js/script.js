@@ -328,8 +328,9 @@ $(document).ready(() => {
     //Create neighborhood vs average time taken chart
     var neighborhood_label = [];
     var neighborhood_time_data = [];
-    var neighborhood_time_sum = {};
     var neighborhood_count = {};
+    var neighborhood_time_sum = {};
+    var neighborhood_time_count = {};
     var neighborhood_time_avg = {};
 
     //gets count of each neighborhood and total time for each neighborhood
@@ -337,14 +338,15 @@ $(document).ready(() => {
       var temp = data[i];
       if (temp.difference >= 0) {
         neighborhood_time_sum[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] || 0) + temp.difference;
-        neighborhood_count[temp.neighborhood_district] = (neighborhood_count[temp.neighborhood_district] || 0) + 1;
+        neighborhood_time_count[temp.neighborhood_district] = (neighborhood_time_count[temp.neighborhood_district] || 0) + 1;
       }
+      neighborhood_count[temp.neighborhood_district] = (neighborhood_count[temp.neighborhood_district] || 0) + 1;
     }
 
     //calculates average time taken
     for(var i = 0; i < data.length; i++) {
       var temp = data[i];
-      neighborhood_time_avg[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] / neighborhood_count[temp.neighborhood_district]).toFixed(2);
+      neighborhood_time_avg[temp.neighborhood_district] = (neighborhood_time_sum[temp.neighborhood_district] / neighborhood_time_count[temp.neighborhood_district]).toFixed(2);
     }
 
     var neighborhood_sorted = Object.keys(neighborhood_time_avg).sort(function(a,b){return neighborhood_time_avg[b]-neighborhood_time_avg[a]})
@@ -399,11 +401,19 @@ $(document).ready(() => {
     })//close neighborhood vs time taken chart
 
     //Create num calls vs neighborhood chart
-    var neighborhood_sum_data= [];
-    var neighborhood_sum = Object.keys(neighborhood_count).sort(function(a,b){return neighborhood_count[b]-neighborhood_count[a]})
+    var neighborhood_sum_data = [];
+    var neighborhood_sum_label = [];
+    var sorted_neighborhood_sum = Object.keys(neighborhood_count).sort(function(a,b){return neighborhood_count[b]-neighborhood_count[a]})
 
-    for(var i in neighborhood_sum) {
-      neighborhood_sum_data.push(neighborhood_count[neighborhood_sum[i]]);
+    for(var i in sorted_neighborhood_sum) {
+      neighborhood_sum_label.push(sorted_neighborhood_sum[i]);
+      neighborhood_sum_data.push(neighborhood_count[sorted_neighborhood_sum[i]]);
+    }
+
+    var sorted_call_types = Object.keys(num_call_types).sort(function(a,b){return num_call_types[b]-num_call_types[a]})
+    for(var i in sorted_call_types) {
+      call_types_label.push(sorted_call_types[i]);
+      call_types_data.push(num_call_types[sorted_call_types[i]]);
     }
 
     var neighborhood_average_time = new Chart("neighborhood_num_chart", {
@@ -413,7 +423,7 @@ $(document).ready(() => {
           data: neighborhood_sum_data,
           backgroundColor:'rgba(230,61,162,0.7)'
         }],
-        labels: neighborhood_label
+        labels: neighborhood_sum_label
       },
       options: {
         responsive: true,
@@ -458,15 +468,17 @@ $(document).ready(() => {
         safe_count[temp.neighborhood_district] = (safe_count[temp.neighborhood_district] || 0) + 1;
       }
     }
-    var safe_count_avg= [];
+    var safe_count_avg= {};
     for(var i in safe_count) {
-      safe_count_avg.push((safe_count[i] / neighborhood_count[i]).toFixed(2) * 100);
+      safe_count_avg[i] = Math.round((safe_count[i] / neighborhood_count[i]).toFixed(2) * 100);
     }
 
     var safe_sorted = Object.keys(safe_count_avg).sort(function(a,b){return safe_count_avg[b]-safe_count_avg[a]})
-
-    var safe_count_data= [];
+console.log(safe_count_avg)
+    var safe_count_data = [];
+    var safe_count_label = [];
     for(var i in safe_sorted) {
+      safe_count_label.push(safe_sorted[i]);
       safe_count_data.push(safe_count_avg[safe_sorted[i]]);
     }
 
@@ -477,7 +489,7 @@ $(document).ready(() => {
           data: safe_count_data,
           backgroundColor:'rgba(230,219,61,0.7)'
         }],
-        labels: neighborhood_label
+        labels: safe_count_label
       },
       options: {
         responsive: true,
