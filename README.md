@@ -2,7 +2,7 @@
 
 An analysis of data from the San Francisco Fire Department of emergency calls.
 
-Built for the CapitalOne Challenge for Summer Summit 2018.
+Winner | Built for the CapitalOne Challenge for Summer Summit 2018.
 
 Challenge:  https://www.mindsumo.com/contests/sfpd-dispatch
 

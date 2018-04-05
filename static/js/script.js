@@ -4,6 +4,8 @@ var map, heatmap_freq, heatmap_urgency, geocoder;
 
 var medChart = true, railChart = true;
 
+$('#results').hide();
+
 // Initiales the map
 function initMap() {
   map = new google.maps.Map(document.getElementById('heatmap'), {
@@ -73,6 +75,7 @@ function geocodeAddress(geocoder, data) {
 
         if (closest.length == 0) {
           $('#estimation').text("Sorry! There isn't enough data to estimate for this address. Please try something else in San Francisco!");
+          $('#results').hide();
           return;
         }
 
@@ -96,6 +99,7 @@ function geocodeAddress(geocoder, data) {
         unit_type = Object.keys(unit_type).sort(function(a,b){return unit_type[b]-unit_type[a]})
 
         //shows predictions
+        $('#results').show();
         $('#estimation').text("Predicted dispatch based on " + closest.length +" calls:");
         $('#call_type').text(call_type[0]);
         $('#time_taken').text((time_taken_sum[call_type[0]] / time_taken_count[call_type[0]]).toFixed(2));
@@ -103,10 +107,12 @@ function geocodeAddress(geocoder, data) {
 
       } else {
         $('#estimation').text("Please enter valid address!");
+        $('#results').hide();
       }
     });
   } else {
     $('#estimation').text("Please don't leave any fields blank!");
+    $('#results').hide();
   }
 
 }
